@@ -70,16 +70,12 @@ public class WC implements Callable<Integer> {
 
         if (showAll || showLines)
             sb.append(space(4)).append(wordCount.lineCount());
-            // sb.append("\t").append(wordCount.lineCount());
         if (showAll || showWords)
             sb.append(space(3)).append(wordCount.wordCount());
-            // sb.append("\t").append(wordCount.wordCount());
         if (showAll || showBytes || showChars)
             sb.append(space(2)).append(wordCount.byteOrCharCount());
-            // sb.append("\t").append(wordCount.byteOrCharCount());
         if (file != null)
             sb.append(space(1)).append(file.getName());
-            // sb.append("\t").append(file.getName());
 
         return sb.toString();
     }
