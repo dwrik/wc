@@ -17,6 +17,8 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.ExitCode;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Spec;
+import picocli.CommandLine.Model.CommandSpec;
 
 @Command(name = "wc", mixinStandardHelpOptions = true, version = "wc 1.1", description = "Displays number of lines, words, bytes contained in input file or stdin")
 public class WC implements Callable<Integer> {
@@ -36,6 +38,9 @@ public class WC implements Callable<Integer> {
     @Option(names = { "-l" }, description = "The number of lines in input file is written to stdout")
     private boolean showLines;
 
+    @Spec
+    private CommandSpec spec;
+
     @Override
     public Integer call() throws Exception {
         Charset charset = showChars
@@ -47,12 +52,12 @@ public class WC implements Callable<Integer> {
                 : Files.newBufferedReader(file.toPath(), charset)) {
             var wordCountService = new WordCountService(reader);
             var wordCount = wordCountService.getCount();
-            System.out.println(getOutputString(wordCount));
+            printOut(getOutputString(wordCount));
         } catch (IOException e) {
-            System.err.println("failed to read input: " + e.getMessage());
+            printErr("failed to read input: " + e.getMessage());
             return ExitCode.SOFTWARE;
         } catch (Exception e) {
-            System.err.println("something went wrong: " + e.getMessage());
+            printErr("something went wrong: " + e.getMessage());
             return ExitCode.SOFTWARE;
         }
 
@@ -64,15 +69,27 @@ public class WC implements Callable<Integer> {
         final boolean showAll = !showLines && !showWords && !showBytes && !showChars;
 
         if (showAll || showLines)
-            sb.append(file != null ? space(4) : space(7)).append(wordCount.lineCount());
+            sb.append(space(4)).append(wordCount.lineCount());
+            // sb.append("\t").append(wordCount.lineCount());
         if (showAll || showWords)
-            sb.append(file != null ? space(3) : space(7)).append(wordCount.wordCount());
+            sb.append(space(3)).append(wordCount.wordCount());
+            // sb.append("\t").append(wordCount.wordCount());
         if (showAll || showBytes || showChars)
-            sb.append(file != null ? space(2) : space(6)).append(wordCount.byteOrCharCount());
+            sb.append(space(2)).append(wordCount.byteOrCharCount());
+            // sb.append("\t").append(wordCount.byteOrCharCount());
         if (file != null)
             sb.append(space(1)).append(file.getName());
+            // sb.append("\t").append(file.getName());
 
         return sb.toString();
+    }
+
+    private void printOut(String s) {
+        spec.commandLine().getOut().println(s);
+    }
+
+    private void printErr(String s) {
+        spec.commandLine().getErr().println(s);
     }
 
     private static String space(int n) {
