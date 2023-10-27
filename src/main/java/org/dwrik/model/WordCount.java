@@ -1,3 +1,4 @@
 package org.dwrik.model;
 
-public record WordCount(int lineCount, int wordCount, int byteOrCharCount) {}
+public record WordCount(int lineCount, int wordCount, int byteOrCharCount) {
+}
