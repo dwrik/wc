@@ -24,11 +24,10 @@
       <artifactId>picocli</artifactId>
       <version>4.7.5</version>
     </dependency>
-
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.0.0-M5</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -36,10 +35,10 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
         <!-- for reflection & other configuration for native image -->
         <!-- requires maven-compiler-plugin version 3.5 or higher -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin-version}</version>
         <configuration>
           <annotationProcessorPaths>
