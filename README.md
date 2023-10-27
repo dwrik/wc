@@ -1,14 +1,12 @@
 # wc
 
-## Description
-
-This is a `Java` implementation of the Unix core tool `wc`.
+This is a _java_ implementation of the Unix core tool `wc`.
 
 ![wc command line execution](./images/screenshot.png "wc command line execution")
 
-The cli has been implemented using [picocli](https://picocli.info/) and native executable has been generated using [GraalVM](https://www.graalvm.org/). The executable is an `arm64` binary compiled on an M1 Macbook Air 2020.
+The cli is built using [picocli](https://picocli.info/) and the native executable is generated using [GraalVM](https://www.graalvm.org/). The executable is an `arm64` binary compiled on an M1 Macbook Air 2020.
 
-The binary generated is standalone i.e. everything required to run it is packaged into it. No java installation (jre, jdk, etc.) is necessary thanks to _GraalVM native-image_. The binary can be executed just like any other by simply invoking it on the command line:
+The binary generated is standalone i.e. everything required to run it, is packaged into it. Java installation of any kind (JRE, JDK, JVM etc.) is not required thanks to _GraalVM native-image_. The binary can be executed just like any other command line application by simply invoking it on the command line:
 
 ```
 >>> ./wc test.txt
